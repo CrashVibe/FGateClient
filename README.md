@@ -1,4 +1,4 @@
-# FGATE Client - Bukkit
+# FGATE Client
 
 ## 说明
 
