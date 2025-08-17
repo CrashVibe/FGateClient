@@ -15,7 +15,7 @@ class FGateClient : JavaPlugin() {
   }
 
   override fun onEnable() {
-    pluginScope = PluginCoroutineScope(this)
+    pluginScope = PluginCoroutineScope()
     ServiceManager.init(this)
     initListeners()
   }
