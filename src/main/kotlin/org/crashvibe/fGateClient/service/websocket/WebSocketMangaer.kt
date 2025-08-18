@@ -5,6 +5,7 @@ import com.crashvibe.fgateclient.handler.impl.GetClientInfo
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonObject
@@ -13,6 +14,7 @@ import kotlinx.serialization.serializer
 import org.crashvibe.fGateClient.FGateClient
 import org.crashvibe.fGateClient.service.ConfigManager
 import org.crashvibe.fGateClient.service.debug
+import org.crashvibe.fGateClient.service.websocket.impl.ChatBroadcast
 import org.crashvibe.fGateClient.service.websocket.impl.KickPlayer
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
@@ -31,13 +33,14 @@ class WebSocketManager(
     "X-API-Version" to plugin.pluginMeta.version,
   )
 ) {
-  private val pluginScope = plugin.pluginScope
+  val pluginScope = plugin.pluginScope
   private val pendingRequests = ConcurrentHashMap<String, PendingRequest<*>>()
   val logger = FGateClient.instance.logger
 
   init {
     RequestDispatcher.registerHandler(GetClientInfo())
     RequestDispatcher.registerHandler(KickPlayer())
+    RequestDispatcher.registerHandler(ChatBroadcast())
     instance = this
     logger.info("WebSocketManager 初始化完成，连接到: $uri")
     connect()
@@ -132,8 +135,8 @@ class WebSocketManager(
   suspend fun <P, R> sendRequestTyped(
     method: String,
     params: P?,
-    paramsSerializer: kotlinx.serialization.KSerializer<P>,
-    resultSerializer: kotlinx.serialization.KSerializer<R>,
+    paramsSerializer: KSerializer<P>,
+    resultSerializer: KSerializer<R>,
     timeoutMillis: Long = 5000
   ): JsonRpcResponse<R, JsonElement> {
     val id = UUID.randomUUID().toString()
@@ -144,7 +147,7 @@ class WebSocketManager(
 
     val deferred = CompletableDeferred<JsonRpcResponse<JsonElement, JsonElement>>()
     pendingRequests[id] = PendingRequest(deferred, requestId = id)
-
+    logger.debug("发送请求: ${Json.encodeToString(request)}")
     send(Json.encodeToString(request))
 
     @Suppress("UNCHECKED_CAST") val response =
@@ -167,11 +170,11 @@ class WebSocketManager(
   }
 
   fun <R, E> sendResponseTyped(
-    id: String? = null,
+    id: String?,
     result: R? = null,
     error: JsonRpcResponse.JsonRpcError<E>? = null,
-    resultSerializer: kotlinx.serialization.KSerializer<R>,
-    errorSerializer: kotlinx.serialization.KSerializer<E>
+    resultSerializer: KSerializer<R>,
+    errorSerializer: KSerializer<E>
   ) {
     val resultJson = result?.let { Json.encodeToJsonElement(resultSerializer, it) }
     val errorJson = error?.let {
@@ -192,10 +195,29 @@ class WebSocketManager(
   }
 
   inline fun <reified R, reified E> sendResponse(
-    id: String? = null,
+    id: String?,
     result: R? = null,
     error: JsonRpcResponse.JsonRpcError<E>? = null
   ) {
     sendResponseTyped(id, result, error, serializer<R>(), serializer<E>())
+  }
+
+  fun sendNoticeTyped(
+    method: String, params: JsonElement? = null
+  ) {
+    val request = JsonRpcRequest(
+      jsonrpc = "2.0", method = method, params = params, id = null
+    )
+    val json = Json.encodeToString(request)
+    logger.debug("发送通知: $json")
+    send(json)
+  }
+
+  inline fun <reified P> sendNotice(
+    method: String, params: P? = null
+  ) {
+    sendNoticeTyped(
+      method, params?.let { Json.encodeToJsonElement(serializer<P>(), it) }
+    )
   }
 }

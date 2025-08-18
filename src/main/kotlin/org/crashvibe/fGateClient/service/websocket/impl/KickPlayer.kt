@@ -2,9 +2,7 @@ package org.crashvibe.fGateClient.service.websocket.impl
 
 import com.crashvibe.fgateclient.handler.RequestHandler
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.serializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacyAmpersand
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -31,7 +29,7 @@ class KickPlayer : RequestHandler() {
 
   override fun handle(request: JsonRpcRequest<JsonElement>) {
     try {
-      val kickParams = parseParams(request) ?: return
+      val kickParams = parseParams<KickPlayerParams>(request) ?: return
       logger.info("踢出玩家: ${kickParams.playerName ?: kickParams.playerUUID}, 原因: ${kickParams.reason}")
 
       Bukkit.getScheduler().runTask(FGateClient.instance, Runnable {
@@ -40,19 +38,6 @@ class KickPlayer : RequestHandler() {
     } catch (e: Exception) {
       sendInvalidParamsError(request.id, "参数解析失败: ${e.message}")
     }
-  }
-
-  private fun parseParams(request: JsonRpcRequest<JsonElement>): KickPlayerParams? {
-    val params = request.params?.let {
-      Json.decodeFromJsonElement(serializer<KickPlayerParams>(), it)
-    }
-
-    if (params == null) {
-      sendInvalidParamsError(request.id, "Missing parameters")
-      return null
-    }
-
-    return params
   }
 
   private fun executeKick(request: JsonRpcRequest<JsonElement>, params: KickPlayerParams) {

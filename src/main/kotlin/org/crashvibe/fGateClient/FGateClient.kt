@@ -2,6 +2,7 @@ package org.crashvibe.fGateClient
 
 import PluginCoroutineScope
 import org.bukkit.plugin.java.JavaPlugin
+import org.crashvibe.fGateClient.listeners.OnChat
 import org.crashvibe.fGateClient.listeners.OnJoin
 import org.crashvibe.fGateClient.service.ServiceManager
 import org.crashvibe.fGateClient.utils.registerEvents
@@ -25,7 +26,7 @@ class FGateClient : JavaPlugin() {
   }
 
   private fun initListeners() {
-    registerEvents(this, OnJoin())
+    registerEvents(this, OnJoin(), OnChat())
   }
 
   companion object {

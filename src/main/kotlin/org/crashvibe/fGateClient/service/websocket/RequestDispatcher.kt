@@ -43,7 +43,7 @@ object RequestDispatcher {
       } catch (e: Exception) {
         logger.log(Level.SEVERE, "ERROR: $method", e)
         webSocketManager.sendResponse<JsonElement, JsonElement>(
-          null, null, JsonRpcResponse.JsonRpcError(
+          request.id, null, JsonRpcResponse.JsonRpcError(
             code = -32603, // Internal error
             message = e.message ?: "Internal error", null
           )
