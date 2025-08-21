@@ -1,13 +1,8 @@
 name: FGateClient
-version: ${version}
+version: 0.0.1
 main: org.crashvibe.fGateClient.FGateClient
-api-version: '1.21'
-
+api-version: '1.13'
 softdepend:
   - PlaceholderAPI
-
 authors:
   - CrashVibe
-
-contributors:
-  - MrlingXD
