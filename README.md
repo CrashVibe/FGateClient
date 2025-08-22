@@ -12,7 +12,7 @@
 * 本项目为 **FGATE Nexus 的子项目**，需要配合 [FGATE Nexus](https://github.com/CrashVibe/FGateNexus) 一起使用
 * 作为 **Nexus 的客户端插件**，提供与服务器的简化连接
 * 仅支持基于 Bukkit 服务器
-  > 后续可能会支持更多服务端，但目前仅限于 Paper，等等我！或者帮帮我qwq
+  > 后续可能会支持更多服务端，但目前仅限于 Bukkit，等等我！或者帮帮我qwq
 * 如果有任何兼容性问题，请提交 issue ！
   > 尽力而为啦
 
