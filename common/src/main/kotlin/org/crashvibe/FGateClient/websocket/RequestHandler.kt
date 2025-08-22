@@ -3,17 +3,14 @@ package com.crashvibe.fgateclient.handler
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.serializer
-import org.crashvibe.fGateClient.FGateClient
-import org.crashvibe.fGateClient.service.ServiceManager.webSocketManager
-import org.crashvibe.fGateClient.service.websocket.JsonRpcRequest
-import org.crashvibe.fGateClient.service.websocket.JsonRpcResponse
+import org.crashvibe.FGateClient.FGateClient.webSocketManager
+import org.crashvibe.FGateClient.websocket.JsonRpcRequest
+import org.crashvibe.FGateClient.websocket.JsonRpcResponse
 
 /**
  * WebSocket 请求处理器基类
  */
 abstract class RequestHandler {
-  val logger = FGateClient.instance.logger
-
   /**
    * 获取处理器支持的方法名
    */

@@ -1,12 +1,12 @@
-package com.crashvibe.fgateclient.handler
+package org.crashvibe.FGateClient.websocket
 
+import com.crashvibe.fgateclient.handler.RequestHandler
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonElement
-import org.crashvibe.fGateClient.FGateClient
-import org.crashvibe.fGateClient.service.ServiceManager.webSocketManager
-import org.crashvibe.fGateClient.service.debug
-import org.crashvibe.fGateClient.service.websocket.JsonRpcRequest
-import org.crashvibe.fGateClient.service.websocket.JsonRpcResponse
+import org.crashvibe.FGateClient.FGateClient.logger
+import org.crashvibe.FGateClient.FGateClient.pluginScope
+import org.crashvibe.FGateClient.FGateClient.webSocketManager
+import org.crashvibe.FGateClient.utils.debug
 import java.util.logging.Level
 
 /**
@@ -14,9 +14,6 @@ import java.util.logging.Level
  */
 object RequestDispatcher {
   private val handlers: MutableMap<String, RequestHandler> = HashMap<String, RequestHandler>()
-
-  val logger = FGateClient.instance.logger
-  private val pluginScope = FGateClient.instance.pluginScope
 
   /**
    * 注册请求处理器

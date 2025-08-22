@@ -1,4 +1,4 @@
-package org.crashvibe.fGateClient.utils
+package org.crashvibe.FGateBukkit.utils
 
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin

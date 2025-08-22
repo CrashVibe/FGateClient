@@ -1,4 +1,4 @@
-package org.crashvibe.fGateClient.utils
+package org.crashvibe.FGateBukkit.utils
 
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender

@@ -1,10 +1,9 @@
-package org.crashvibe.fGateClient.service
+package org.crashvibe.FGateClient.config
 
 import de.exlll.configlib.Comment
 import de.exlll.configlib.Configuration
 import de.exlll.configlib.YamlConfigurations
-import org.bukkit.plugin.java.JavaPlugin
-import java.io.File
+import java.nio.file.Path
 
 /**
  * 插件配置数据结构
@@ -49,8 +48,7 @@ object ConfigManager {
   lateinit var configData: PluginConfig
     private set
 
-  fun init(plugin: JavaPlugin) {
-    val configFile = File(plugin.dataFolder, "config.yml").toPath()
+  fun init(configFile: Path) {
     configData = YamlConfigurations.update(
       configFile,
       PluginConfig::class.java,

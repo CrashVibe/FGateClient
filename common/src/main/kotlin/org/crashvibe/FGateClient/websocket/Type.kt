@@ -1,4 +1,4 @@
-package org.crashvibe.fGateClient.service.websocket
+package org.crashvibe.FGateClient.websocket
 
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.withTimeout

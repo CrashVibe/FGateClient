@@ -1,7 +1,5 @@
-package org.crashvibe.fGateClient.service.websocket
+package org.crashvibe.FGateClient.websocket
 
-import com.crashvibe.fgateclient.handler.RequestDispatcher
-import com.crashvibe.fgateclient.handler.impl.GetClientInfo
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -11,36 +9,31 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.serializer
-import org.crashvibe.fGateClient.FGateClient
-import org.crashvibe.fGateClient.service.ConfigManager
-import org.crashvibe.fGateClient.service.debug
-import org.crashvibe.fGateClient.service.websocket.impl.ChatBroadcast
-import org.crashvibe.fGateClient.service.websocket.impl.KickPlayer
+import org.crashvibe.BuildConfig
+import org.crashvibe.FGateClient.FGateClient.logger
+import org.crashvibe.FGateClient.FGateClient.pluginScope
+import org.crashvibe.FGateClient.config.ConfigManager
+import org.crashvibe.FGateClient.utils.debug
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
+import java.net.ConnectException
 import java.net.URI
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.logging.Level
 
 
-@Suppress("UnstableApiUsage")
 class WebSocketManager(
-  uri: URI, token: String, plugin: FGateClient
+  uri: URI, token: String
 ) : WebSocketClient(
   uri, mapOf(
     "Authorization" to "Bearer $token",
-    "X-API-Version" to plugin.pluginMeta.version,
+    "X-API-Version" to BuildConfig.VERSION,
   )
 ) {
-  val pluginScope = plugin.pluginScope
   private val pendingRequests = ConcurrentHashMap<String, PendingRequest<*>>()
-  val logger = FGateClient.instance.logger
 
   init {
-    RequestDispatcher.registerHandler(GetClientInfo())
-    RequestDispatcher.registerHandler(KickPlayer())
-    RequestDispatcher.registerHandler(ChatBroadcast())
     instance = this
     logger.info("WebSocketManager 初始化完成，连接到: $uri")
     connect()
@@ -66,7 +59,7 @@ class WebSocketManager(
   }
 
   override fun onError(ex: Exception) {
-    if (ex is java.net.ConnectException) {
+    if (ex is ConnectException) {
       logger.warning("连接失败: ${ex.message}")
     } else {
       logger.log(Level.SEVERE, "WebSocket 连接发生错误", ex)

@@ -1,6 +1,6 @@
 name: FGateClient
 version: 0.0.1
-main: org.crashvibe.fGateClient.FGateClient
+main: org.crashvibe.FGateBukkit.FGateBukkit
 api-version: '1.13'
 softdepend:
   - PlaceholderAPI

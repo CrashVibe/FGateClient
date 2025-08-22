@@ -17,13 +17,10 @@ repositories {
 }
 
 dependencies {
+  implementation(project(":common"))
   compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
-  implementation("org.java-websocket:Java-WebSocket:1.6.0")
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-  implementation("de.exlll:configlib-yaml:4.6.1")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
   implementation("org.bstats:bstats-bukkit:3.0.2")
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 }
 
 tasks {

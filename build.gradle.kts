@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
   implementation(project(":bukkit"))
+  implementation(project(":common"))
 }
 
 kotlin {

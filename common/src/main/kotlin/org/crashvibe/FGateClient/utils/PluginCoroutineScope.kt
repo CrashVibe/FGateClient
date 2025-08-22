@@ -1,3 +1,5 @@
+package org.crashvibe.FGateClient.utils
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
