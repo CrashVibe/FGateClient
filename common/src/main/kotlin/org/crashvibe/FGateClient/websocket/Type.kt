@@ -36,3 +36,9 @@ data class PendingRequest<T>(
     deferred.completeExceptionally(reason)
   }
 }
+
+enum class MethodType(val method: String) {
+  KICK_PLAYER("kick.player"),
+  GET_CLIENT_INFO("get.client.info"),
+  CHAT_BROADCAST("chat.broadcast"),
+}

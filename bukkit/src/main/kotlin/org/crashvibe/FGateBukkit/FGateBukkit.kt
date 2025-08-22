@@ -32,10 +32,9 @@ class FGateBukkit : JavaPlugin() {
           supports_command = Command.isAvailable,
           player_count = Bukkit.getOnlinePlayers().size
         )
-      )
+      ),
+      KickPlayer(), ChatBroadcast()
     )
-    RequestDispatcher.registerHandler(KickPlayer())
-    RequestDispatcher.registerHandler(ChatBroadcast())
     initListeners()
   }
 

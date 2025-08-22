@@ -6,6 +6,7 @@ import kotlinx.serialization.serializer
 import org.crashvibe.FGateClient.FGateClient.webSocketManager
 import org.crashvibe.FGateClient.websocket.JsonRpcRequest
 import org.crashvibe.FGateClient.websocket.JsonRpcResponse
+import org.crashvibe.FGateClient.websocket.MethodType
 
 /**
  * WebSocket 请求处理器基类
@@ -14,7 +15,7 @@ abstract class RequestHandler {
   /**
    * 获取处理器支持的方法名
    */
-  abstract val method: String
+  abstract val method: MethodType
 
   /**
    * 处理请求

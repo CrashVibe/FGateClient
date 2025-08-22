@@ -6,9 +6,10 @@ import kotlinx.serialization.json.JsonElement
 import org.crashvibe.FGateClient.FGateClient.logger
 import org.crashvibe.FGateClient.websocket.JsonRpcRequest
 import org.crashvibe.FGateClient.websocket.JsonRpcResponse
+import org.crashvibe.FGateClient.websocket.MethodType
 
 abstract class KickPlayer : RequestHandler() {
-  override val method: String = "kick.player"
+  override val method: MethodType = MethodType.KICK_PLAYER
 
   @Serializable
   data class KickPlayerParams(

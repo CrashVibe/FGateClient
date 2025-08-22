@@ -18,9 +18,21 @@ object RequestDispatcher {
   /**
    * 注册请求处理器
    */
-  fun registerHandler(handler: RequestHandler) {
-    handlers[handler.method] = handler
-    logger.debug("注册方法: " + handler.method)
+  fun registerHandler(vararg handler: RequestHandler) {
+    handler.forEach { handler ->
+      handlers[handler.method.method] = handler
+      logger.debug("注册方法: " + handler.method)
+    }
+    MethodType.entries.forEach { method ->
+      if (!handlers.containsKey(method.method)) {
+        logger.warning("未注册方法: $method")
+      }
+    }
+    handlers.keys.forEach { method ->
+      if (MethodType.entries.none { it.method == method }) {
+        logger.warning("注册了未知方法: $method")
+      }
+    }
   }
 
   /**

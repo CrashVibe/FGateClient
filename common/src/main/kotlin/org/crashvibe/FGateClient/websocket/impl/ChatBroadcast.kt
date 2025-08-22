@@ -4,9 +4,10 @@ import com.crashvibe.fgateclient.handler.RequestHandler
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
 import org.crashvibe.FGateClient.websocket.JsonRpcRequest
+import org.crashvibe.FGateClient.websocket.MethodType
 
 abstract class ChatBroadcast : RequestHandler() {
-  override val method: String = "chat.broadcast"
+  override val method: MethodType = MethodType.CHAT_BROADCAST
 
   @Serializable
   data class Message(

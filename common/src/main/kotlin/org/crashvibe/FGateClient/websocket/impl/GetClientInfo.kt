@@ -4,13 +4,14 @@ import com.crashvibe.fgateclient.handler.RequestHandler
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
 import org.crashvibe.FGateClient.websocket.JsonRpcRequest
+import org.crashvibe.FGateClient.websocket.MethodType
 
 
 /**
  * 获取客户端信息请求处理器
  */
 class GetClientInfo(val clientInfo: ClientInfo) : RequestHandler() {
-  override val method: String = "get.client.info"
+  override val method: MethodType = MethodType.GET_CLIENT_INFO
 
   @Serializable
   data class ClientInfo(
