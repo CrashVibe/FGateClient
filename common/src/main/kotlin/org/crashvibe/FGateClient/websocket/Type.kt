@@ -41,4 +41,5 @@ enum class MethodType(val method: String) {
   KICK_PLAYER("kick.player"),
   GET_CLIENT_INFO("get.client.info"),
   CHAT_BROADCAST("chat.broadcast"),
+  EXECUTE_COMMAND("execute.command"),
 }

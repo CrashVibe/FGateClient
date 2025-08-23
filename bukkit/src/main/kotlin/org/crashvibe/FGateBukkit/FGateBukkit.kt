@@ -5,10 +5,10 @@ import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.crashvibe.FGateBukkit.handler.ChatBroadcast
+import org.crashvibe.FGateBukkit.handler.Command
 import org.crashvibe.FGateBukkit.handler.KickPlayer
 import org.crashvibe.FGateBukkit.listeners.OnChat
 import org.crashvibe.FGateBukkit.listeners.OnJoin
-import org.crashvibe.FGateBukkit.utils.Command
 import org.crashvibe.FGateBukkit.utils.registerEvents
 import org.crashvibe.FGateClient.FGateClient
 import org.crashvibe.FGateClient.websocket.RequestDispatcher
@@ -29,11 +29,11 @@ class FGateBukkit : JavaPlugin() {
           minecraft_version = Bukkit.getVersion(),
           minecraft_software = Bukkit.getName(),
           supports_papi = Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null,
-          supports_command = Command.isAvailable,
+          supports_command = true,
           player_count = Bukkit.getOnlinePlayers().size
         )
       ),
-      KickPlayer(), ChatBroadcast()
+      KickPlayer(), ChatBroadcast(), Command()
     )
     initListeners()
   }
