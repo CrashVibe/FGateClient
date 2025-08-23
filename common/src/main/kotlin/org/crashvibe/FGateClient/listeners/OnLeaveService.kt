@@ -3,17 +3,17 @@ package org.crashvibe.FGateClient.listeners
 import kotlinx.serialization.Serializable
 import org.crashvibe.FGateClient.websocket.WebSocketManager
 
-object OnJoinService {
+object OnLeaveService {
   @Serializable
-  data class JoinInfo(val playerName: String)
+  data class LeaveInfo(val playerName: String)
 
-  fun handleJoin(player: String) {
+  fun handleLeave(player: String) {
     if (!WebSocketManager.instance.isOpen) {
       return
     }
 
-    val request = JoinInfo(player)
+    val request = LeaveInfo(player)
 
-    WebSocketManager.instance.sendNotice("player.join", request)
+    WebSocketManager.instance.sendNotice("player.leave", request)
   }
 }

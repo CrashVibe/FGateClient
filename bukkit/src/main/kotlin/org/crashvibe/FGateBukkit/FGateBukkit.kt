@@ -7,8 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.crashvibe.FGateBukkit.handler.ChatBroadcast
 import org.crashvibe.FGateBukkit.handler.Command
 import org.crashvibe.FGateBukkit.handler.KickPlayer
-import org.crashvibe.FGateBukkit.listeners.OnChat
-import org.crashvibe.FGateBukkit.listeners.OnJoin
+import org.crashvibe.FGateBukkit.listeners.*
 import org.crashvibe.FGateBukkit.utils.registerEvents
 import org.crashvibe.FGateClient.FGateClient
 import org.crashvibe.FGateClient.websocket.RequestDispatcher
@@ -43,7 +42,7 @@ class FGateBukkit : JavaPlugin() {
   }
 
   private fun initListeners() {
-    registerEvents(this, OnJoin(), OnChat())
+    registerEvents(this, OnLogin(), OnChat(), OnLeave(), OnJoin(), OnDeath())
   }
 
   companion object {
