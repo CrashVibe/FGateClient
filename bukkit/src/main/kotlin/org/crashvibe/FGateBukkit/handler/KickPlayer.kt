@@ -12,7 +12,8 @@ import java.util.*
 
 class KickPlayer : KickPlayer() {
   override fun executeKick(request: JsonRpcRequest<JsonElement>, params: KickPlayerParams) {
-    val player = findPlayer(request, params) ?: return
+    val player =
+      findPlayer(request, params) ?: sendResponse(request.id, KickPlayerResponse(false, "玩家未找到")).let { return }
     Bukkit.getScheduler().runTask(FGateBukkit.instance, Runnable {
       player.kick(legacyAmpersand().deserialize(params.reason))
     })
