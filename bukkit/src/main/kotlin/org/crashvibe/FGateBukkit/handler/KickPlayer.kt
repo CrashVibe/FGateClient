@@ -4,6 +4,7 @@ import kotlinx.serialization.json.JsonElement
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacyAmpersand
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import org.crashvibe.FGateBukkit.FGateBukkit
 import org.crashvibe.FGateClient.websocket.JsonRpcRequest
 import org.crashvibe.FGateClient.websocket.JsonRpcResponse
 import org.crashvibe.FGateClient.websocket.impl.KickPlayer
@@ -12,8 +13,9 @@ import java.util.*
 class KickPlayer : KickPlayer() {
   override fun executeKick(request: JsonRpcRequest<JsonElement>, params: KickPlayerParams) {
     val player = findPlayer(request, params) ?: return
-
-    player.kick(legacyAmpersand().deserialize(params.reason))
+    Bukkit.getScheduler().runTask(FGateBukkit.instance, Runnable {
+      player.kick(legacyAmpersand().deserialize(params.reason))
+    })
     sendResponse(
       request.id,
       KickPlayerResponse(
