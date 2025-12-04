@@ -28,7 +28,7 @@ class WebSocketManager(
 ) : WebSocketClient(
   uri, mapOf(
     "Authorization" to "Bearer $token",
-    "X-API-Version" to BuildConfig.VERSION,
+    "X-API-Version" to BuildConfig.apiVersion,
   )
 ) {
   private val pendingRequests = ConcurrentHashMap<String, PendingRequest<*>>()

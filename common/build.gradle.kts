@@ -21,5 +21,5 @@ dependencies {
 
 buildConfig {
   packageName(group as String)
-  buildConfigField("String", "VERSION", "\"${project.version}\"")
+  buildConfigField("String", "apiVersion", "\"${properties["apiVersion"].toString()}\"")
 }
