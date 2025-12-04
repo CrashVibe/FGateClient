@@ -12,40 +12,40 @@ object OnLoginService {
   enum class Action { kick, allow }
 
   @Serializable
-  data class JoinInfo(val player: String, val uuid: String, val ip: String, val timestamp: Long)
+  data class LoginInfo(val player: String, val uuid: String, val ip: String, val timestamp: Long)
 
   @Serializable
-  data class JoinResult(val action: Action, val reason: String? = null)
+  data class LoginResult(val action: Action, val reason: String? = null)
 
-  fun handleJoin(player: String, uuid: String, ip: String): JoinResult {
+  fun handleLogin(player: String, uuid: String, ip: String): LoginResult {
     val config = ConfigManager.configData.eventResolve.join
 
     if (!WebSocketManager.instance.isOpen) {
       return if (config.allowJoin) {
-        JoinResult(Action.allow)
+        LoginResult(Action.allow)
       } else {
-        JoinResult(Action.kick, config.kickMessage)
+        LoginResult(Action.kick, config.kickMessage)
       }
     }
 
-    val request = JoinInfo(player, uuid, ip, System.currentTimeMillis())
+    val request = LoginInfo(player, uuid, ip, System.currentTimeMillis())
 
     return try {
-      val response: JsonRpcResponse<JoinResult, JsonElement> = runBlocking {
+      val response: JsonRpcResponse<LoginResult, JsonElement> = runBlocking {
         WebSocketManager.instance.sendRequest("player.login", request)
       }
 
       if (response.error != null) {
         logger.severe("加入事件错误: ${response.error.message}")
-        return if (config.errorJoin) JoinResult(Action.allow)
-        else JoinResult(Action.kick, config.errorMessage)
+        return if (config.errorJoin) LoginResult(Action.allow)
+        else LoginResult(Action.kick, config.errorMessage)
       }
 
-      response.result ?: JoinResult(Action.kick, config.errorMessage)
+      response.result ?: LoginResult(Action.kick, config.errorMessage)
     } catch (e: Exception) {
       logger.severe("加入事件异常: ${e.message}")
-      if (config.errorJoin) JoinResult(Action.allow)
-      else JoinResult(Action.kick, config.errorMessage)
+      if (config.errorJoin) LoginResult(Action.allow)
+      else LoginResult(Action.kick, config.errorMessage)
     }
   }
 }

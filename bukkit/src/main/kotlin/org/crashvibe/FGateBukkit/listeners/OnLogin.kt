@@ -15,7 +15,7 @@ class OnLogin : Listener {
   @EventHandler(priority = EventPriority.HIGHEST)
   fun onAsyncPlayerPreLogin(event: AsyncPlayerPreLoginEvent) {
     val config = ConfigManager.configData.eventResolve.join
-    val result = OnLoginService.handleJoin(event.name, event.uniqueId.toString(), event.address.hostAddress)
+    val result = OnLoginService.handleLogin(event.name, event.uniqueId.toString(), event.address.hostAddress)
 
     when (result.action) {
       OnLoginService.Action.kick -> {
