@@ -1,7 +1,10 @@
-name: FGateClient
-version: 0.0.1
+name: ${name}
+version: ${version}
 main: org.crashvibe.FGateBukkit.FGateBukkit
+description: ${description}
 api-version: '1.13'
+folia-supported: true
+
 softdepend:
   - PlaceholderAPI
 authors:

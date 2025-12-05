@@ -22,6 +22,7 @@ tasks.withType<JavaCompile> {
 }
 
 tasks.register<Jar>("package") {
+  dependsOn("clean")
   val outputDir = rootDir.resolve("outputs")
   outputDir.mkdirs()
   subprojects.forEach { subproject ->

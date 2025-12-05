@@ -8,6 +8,7 @@ plugins {
 
 version = properties["version"].toString()
 group = properties["group"].toString()
+description = properties["description"].toString()
 
 repositories {
   mavenCentral()
@@ -36,5 +37,15 @@ tasks {
     exclude("META-INF/**")
     relocate("org.java_websocket", "${project.group}.libs.websocket")
     relocate("org.bstats", "${project.group}.libs.bstats")
+  }
+
+  processResources {
+    filesMatching("**/plugin.yml") {
+      expand(
+        "name" to project.name,
+        "version" to project.version,
+        "description" to project.description
+      )
+    }
   }
 }
