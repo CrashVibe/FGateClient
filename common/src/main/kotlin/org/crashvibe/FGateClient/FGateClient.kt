@@ -36,7 +36,6 @@ object FGateClient {
     }
     pluginScope.cancelAll()
   }
-
 }
 
 

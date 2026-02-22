@@ -18,10 +18,10 @@ class FGateBukkit : JavaPlugin() {
   override fun onLoad() {
     instance = this
     Metrics(this, 26997)
+    FGateClient.init(File(dataFolder, "config.yml").toPath(), logger)
   }
 
   override fun onEnable() {
-    FGateClient.init(File(dataFolder, "config.yml").toPath(), logger)
     RequestDispatcher.registerHandler(
       GetClientInfo(
         GetClientInfo.ClientInfo(

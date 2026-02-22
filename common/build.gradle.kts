@@ -14,7 +14,6 @@ repositories {
 dependencies {
   implementation("de.exlll:configlib-yaml:4.6.1")
   implementation("org.java-websocket:Java-WebSocket:1.6.0")
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 }
