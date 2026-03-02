@@ -1,3 +1,7 @@
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
+import org.gradle.kotlin.dsl.invoke
+import org.gradle.kotlin.dsl.kotlin
+
 plugins {
   kotlin("jvm") version "2.2.20-Beta2"
   kotlin("plugin.serialization") version "2.2.0"
@@ -33,7 +37,7 @@ tasks {
   }
 
   shadowJar {
-    archiveFileName = "${rootProject.name}-bukkit-${project.version}.${archiveExtension.get()}"
+    archiveFileName = "${rootProject.name}-paper-${project.version}.${archiveExtension.get()}"
     exclude("META-INF/**")
     relocate("org.java_websocket", "${project.group}.libs.websocket")
     relocate("org.bstats", "${project.group}.libs.bstats")
