@@ -1,6 +1,7 @@
 package org.crashvibe.FGateClient.websocket.impl
 
 import com.crashvibe.fgateclient.handler.RequestHandler
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
 import org.crashvibe.FGateClient.websocket.JsonRpcRequest
@@ -12,6 +13,8 @@ abstract class Command : RequestHandler() {
   @Serializable
   data class Command(
     val command: String,
+    @SerialName("need_color")
+    val needColor: Boolean,
   )
 
   @Serializable
@@ -22,8 +25,8 @@ abstract class Command : RequestHandler() {
 
   override fun handle(request: JsonRpcRequest<JsonElement>) {
     val params = parseParams<Command>(request) ?: return
-    sendResponse(request.id, executeCommand(params.command))
+    sendResponse(request.id, executeCommand(params.command, params.needColor))
   }
 
-  abstract fun executeCommand(command: String): CommandResult
+  abstract fun executeCommand(command: String, need_color: Boolean): CommandResult
 }
