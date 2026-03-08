@@ -24,7 +24,7 @@ import java.util.logging.Level
 
 
 class WebSocketManager(
-  uri: URI, token: String
+  uri: URI, token: String, private val requestDispatcher: RequestDispatcher
 ) : WebSocketClient(
   uri, mapOf(
     "Authorization" to "Bearer $token",
@@ -104,7 +104,7 @@ class WebSocketManager(
 
         jsonObject.containsKey("method") -> {
           val request = Json.decodeFromString<JsonRpcRequest<JsonElement>>(message)
-          RequestDispatcher.dispatch(request)
+          requestDispatcher.dispatch(request)
         }
 
         else -> {
@@ -193,6 +193,26 @@ class WebSocketManager(
     error: JsonRpcResponse.JsonRpcError<E>? = null
   ) {
     sendResponseTyped(id, result, error, serializer<R>(), serializer<E>())
+  }
+
+  /**
+   * 发送错误响应的便捷方法
+   */
+  fun sendError(
+    id: String?,
+    code: Int,
+    message: String,
+    data: JsonElement? = null
+  ) {
+    sendResponse<JsonElement, JsonElement>(
+      id = id,
+      result = null,
+      error = JsonRpcResponse.JsonRpcError(
+        code = code,
+        message = message,
+        data = data
+      )
+    )
   }
 
   fun sendNoticeTyped(

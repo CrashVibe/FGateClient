@@ -10,7 +10,6 @@ import org.crashvibe.FGateBukkit.handler.KickPlayer
 import org.crashvibe.FGateBukkit.listeners.*
 import org.crashvibe.FGateBukkit.utils.registerEvents
 import org.crashvibe.FGateClient.FGateClient
-import org.crashvibe.FGateClient.websocket.RequestDispatcher
 import java.io.File
 
 
@@ -18,11 +17,10 @@ class FGateBukkit : JavaPlugin() {
   override fun onLoad() {
     instance = this
     Metrics(this, 26997)
-    FGateClient.init(File(dataFolder, "config.yml").toPath(), logger)
   }
 
   override fun onEnable() {
-    RequestDispatcher.registerHandler(
+    FGateClient.init(File(dataFolder, "config.yml").toPath(), logger,
       GetClientInfo(
         GetClientInfo.ClientInfo(
           minecraft_version = Bukkit.getVersion(),
@@ -34,6 +32,7 @@ class FGateBukkit : JavaPlugin() {
       ),
       KickPlayer(), ChatBroadcast(), Command()
     )
+
     initListeners()
   }
 
