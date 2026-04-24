@@ -1,4 +1,4 @@
-package org.crashvibe.FGateBukkit.handler
+package org.crashvibe.fgatepaper.handler
 
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacyAmpersand
 import org.bukkit.Bukkit

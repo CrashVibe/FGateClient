@@ -1,13 +1,13 @@
-package org.crashvibe.FGateBukkit.handler
+package org.crashvibe.fgatebukkit.handler
 
 import kotlinx.serialization.json.JsonElement
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacyAmpersand
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
-import org.crashvibe.FGateBukkit.FGateBukkit
 import org.crashvibe.FGateClient.websocket.JsonRpcRequest
 import org.crashvibe.FGateClient.websocket.JsonRpcResponse
 import org.crashvibe.FGateClient.websocket.impl.KickPlayer
+import org.crashvibe.fgatebukkit.FGateBukkit
 import java.util.*
 
 class KickPlayer : KickPlayer() {
@@ -15,7 +15,7 @@ class KickPlayer : KickPlayer() {
     val player =
       findPlayer(request, params) ?: sendResponse(request.id, KickPlayerResponse(false, "玩家未找到")).let { return }
     Bukkit.getScheduler().runTask(FGateBukkit.instance, Runnable {
-      player.kick(legacyAmpersand().deserialize(params.reason))
+      player.kickPlayer(ChatColor.translateAlternateColorCodes('&', params.reason))
     })
     sendResponse(
       request.id,

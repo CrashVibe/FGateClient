@@ -1,11 +1,12 @@
-package org.crashvibe.FGateBukkit.handler
+package org.crashvibe.fgatepaper.handler
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.Bukkit
-import org.crashvibe.FGateBukkit.FGateBukkit
 import org.crashvibe.FGateClient.websocket.impl.Command
+import org.crashvibe.fgatepaper.FGatePaper
+import java.util.concurrent.CountDownLatch
 import java.util.function.Consumer
 
 
@@ -20,9 +21,9 @@ class Command : Command() {
       }
       messages.add(serialized)
     })
-    val latch = java.util.concurrent.CountDownLatch(1)
+    val latch = CountDownLatch(1)
     var success = false
-    Bukkit.getScheduler().runTask(FGateBukkit.instance, Runnable {
+    Bukkit.getScheduler().runTask(FGatePaper.instance, Runnable {
       success = Bukkit.dispatchCommand(sender, command)
       latch.countDown()
     })

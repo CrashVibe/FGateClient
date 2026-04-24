@@ -1,6 +1,6 @@
 plugins {
   kotlin("jvm") version "2.2.20-Beta2"
-  id("com.gradleup.shadow") version "8.3.0"
+  id("com.gradleup.shadow") version "9.4.1"
 }
 
 repositories {
@@ -9,6 +9,7 @@ repositories {
 }
 
 dependencies {
+  implementation(project(":paper"))
   implementation(project(":bukkit"))
   implementation(project(":common"))
 }

@@ -1,16 +1,16 @@
-package org.crashvibe.FGateBukkit.listeners
+package org.crashvibe.fgatepaper.listener
 
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent
-import org.crashvibe.FGateBukkit.FGateBukkit
 import org.crashvibe.FGateClient.config.ConfigManager
 import org.crashvibe.FGateClient.listeners.OnLoginService
+import org.crashvibe.fgatepaper.FGatePaper
 
 class OnLogin : Listener {
-  private val logger = FGateBukkit.instance.logger
+  private val logger = FGatePaper.instance.logger
 
   @EventHandler(priority = EventPriority.HIGHEST)
   fun onAsyncPlayerPreLogin(event: AsyncPlayerPreLoginEvent) {

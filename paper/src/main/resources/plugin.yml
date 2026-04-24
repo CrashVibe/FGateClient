@@ -1,8 +1,9 @@
 name: ${name}
 version: ${version}
-main: org.crashvibe.fgatebukkit.FGateBukkit
+main: org.crashvibe.fgatepaper.FGatePaper
 description: ${description}
 api-version: '1.13'
+folia-supported: true
 
 softdepend:
   - PlaceholderAPI

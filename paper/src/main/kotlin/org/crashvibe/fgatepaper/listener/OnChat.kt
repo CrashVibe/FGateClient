@@ -1,14 +1,14 @@
-package org.crashvibe.FGateBukkit.listeners
+package org.crashvibe.fgatepaper.listener
 
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.crashvibe.FGateBukkit.FGateBukkit
 import org.crashvibe.FGateClient.listeners.OnChatService
+import org.crashvibe.fgatepaper.FGatePaper
 
 class OnChat : Listener {
-  private val logger = FGateBukkit.instance.logger
+  private val logger = FGatePaper.instance.logger
 
   @EventHandler
   fun onPlayerChat(event: AsyncChatEvent) {

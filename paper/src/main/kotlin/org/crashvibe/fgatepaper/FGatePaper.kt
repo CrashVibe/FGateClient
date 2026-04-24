@@ -1,19 +1,20 @@
-package org.crashvibe.FGateBukkit
+package org.crashvibe.fgatepaper
 
 import com.crashvibe.fgateclient.handler.impl.GetClientInfo
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
-import org.crashvibe.FGateBukkit.handler.ChatBroadcast
-import org.crashvibe.FGateBukkit.handler.Command
-import org.crashvibe.FGateBukkit.handler.KickPlayer
-import org.crashvibe.FGateBukkit.listeners.*
-import org.crashvibe.FGateBukkit.utils.registerEvents
 import org.crashvibe.FGateClient.FGateClient
+import org.crashvibe.FGateClient.listeners.requiredListeners
+import org.crashvibe.fgatepaper.handler.ChatBroadcast
+import org.crashvibe.fgatepaper.handler.Command
+import org.crashvibe.fgatepaper.handler.KickPlayer
+import org.crashvibe.fgatepaper.listener.PaperPlatformListenerContract
+import org.crashvibe.fgatepaper.utils.registerEvents
 import java.io.File
 
 
-class FGateBukkit : JavaPlugin() {
+class FGatePaper : JavaPlugin() {
   override fun onLoad() {
     instance = this
     Metrics(this, 26997)
@@ -41,11 +42,12 @@ class FGateBukkit : JavaPlugin() {
   }
 
   private fun initListeners() {
-    registerEvents(this, OnLogin(), OnChat(), OnLeave(), OnJoin(), OnDeath())
+    val listeners = requiredListeners(PaperPlatformListenerContract)
+    registerEvents(this, *listeners.toTypedArray())
   }
 
   companion object {
-    lateinit var instance: FGateBukkit
+    lateinit var instance: FGatePaper
       private set
   }
 }

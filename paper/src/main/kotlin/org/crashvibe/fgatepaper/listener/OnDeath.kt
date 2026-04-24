@@ -1,4 +1,4 @@
-package org.crashvibe.FGateBukkit.listeners
+package org.crashvibe.fgatepaper.listener
 
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.event.EventHandler
