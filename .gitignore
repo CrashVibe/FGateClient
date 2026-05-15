@@ -32,7 +32,7 @@ out/
 build/
 
 # Minecraft server runtime
-bukkit/run/
+paper/run/
 
 # macOS
 .DS_Store

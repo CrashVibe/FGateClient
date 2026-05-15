@@ -34,7 +34,7 @@ tasks {
   processResources {
     filesMatching("**/plugin.yml") {
       expand(
-        "name" to "${rootProject.name}-Bukkit",
+        "name" to rootProject.name,
         "version" to project.version,
           "description" to (project.description ?: "")
       )
