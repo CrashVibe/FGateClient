@@ -17,7 +17,7 @@ object OnLoginService {
   @Serializable
   data class LoginResult(val action: Action, val reason: String? = null)
 
-  fun handleLogin(player: String, uuid: String, ip: String): LoginResult {
+  fun handleLogin(player: String, uuid: String, ip: String, timestamp: Long = System.currentTimeMillis()): LoginResult {
     val config = ConfigManager.configData.eventResolve.join
 
     if (!WebSocketManager.instance.isOpen) {
@@ -28,7 +28,7 @@ object OnLoginService {
       }
     }
 
-    val request = LoginInfo(player, uuid, ip, System.currentTimeMillis())
+    val request = LoginInfo(player, uuid, ip, timestamp)
 
     return try {
       val response: JsonRpcResponse<LoginResult, JsonElement> = runBlocking {

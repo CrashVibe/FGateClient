@@ -8,6 +8,6 @@ import org.crashvibe.FGateClient.listeners.OnJoinService
 class OnJoin : Listener {
   @EventHandler
   fun onJoin(event: PlayerJoinEvent) {
-    OnJoinService.handleJoin(event.player.name)
+    OnJoinService.handleJoin(event.player.name, event.player.uniqueId.toString())
   }
 }

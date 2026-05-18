@@ -18,7 +18,7 @@ class OnChat : Listener {
       OnChatService.handleChat(
         playerName = event.player.name,
         playerUUID = event.player.uniqueId.toString(),
-        message = message
+        message = message,
       )
     } catch (e: Exception) {
       logger.severe("处理玩家聊天事件时发生异常: ${e.message}")

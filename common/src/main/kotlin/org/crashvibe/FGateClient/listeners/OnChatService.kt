@@ -13,14 +13,14 @@ object OnChatService {
     val timestamp: Long
   )
 
-  fun handleChat(playerName: String, playerUUID: String, message: String) {
+  fun handleChat(playerName: String, playerUUID: String, message: String, timestamp: Long = System.currentTimeMillis()) {
     if (!WebSocketManager.instance.isOpen) return
 
     val chatMessage = ChatMessage(
       playerName = playerName,
       playerUUID = playerUUID,
       message = message,
-      timestamp = System.currentTimeMillis()
+      timestamp = timestamp
     )
 
     try {

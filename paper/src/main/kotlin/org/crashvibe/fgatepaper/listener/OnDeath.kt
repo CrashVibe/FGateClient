@@ -10,6 +10,7 @@ class OnDeath : Listener {
   @EventHandler
   fun onDeath(event: PlayerDeathEvent) {
     OnDeathService.handleDeath(
+        event.entity.uniqueId.toString(),
       event.entity.name,
       event.deathMessage()?.let { LegacyComponentSerializer.legacySection().serialize(it) }
     )

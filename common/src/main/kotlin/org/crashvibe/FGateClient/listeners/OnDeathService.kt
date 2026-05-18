@@ -5,14 +5,14 @@ import org.crashvibe.FGateClient.websocket.WebSocketManager
 
 object OnDeathService {
   @Serializable
-  data class DeathInfo(val playerName: String, val deathMessage: String?)
+  data class DeathInfo(val playerUUID: String, val playerName: String, val deathMessage: String?, val timestamp: Long)
 
-  fun handleDeath(playerName: String, deathMessage: String?) {
+  fun handleDeath(playerUUID: String, playerName: String, deathMessage: String?, timestamp: Long = System.currentTimeMillis()) {
     if (!WebSocketManager.instance.isOpen) {
       return
     }
 
-    val request = DeathInfo(playerName, deathMessage)
+    val request = DeathInfo(playerUUID, playerName, deathMessage, timestamp)
 
     WebSocketManager.instance.sendNotice("player.death", request)
   }
