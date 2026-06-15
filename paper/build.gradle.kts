@@ -14,11 +14,15 @@ repositories {
   maven("https://repo.papermc.io/repository/maven-public/") {
     name = "papermc-repo"
   }
+  maven("https://repo.extendedclip.com/releases/") {
+    name = "placeholderapi-repo"
+  }
 }
 
 dependencies {
   implementation(project(":common"))
   compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
+  compileOnly("me.clip:placeholderapi:2.11.6")
   implementation("org.bstats:bstats-bukkit:3.1.0")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 }

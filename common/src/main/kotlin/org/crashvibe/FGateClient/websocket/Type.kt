@@ -3,6 +3,7 @@ package org.crashvibe.FGateClient.websocket
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.Serializable
+import kotlin.time.Duration.Companion.milliseconds
 
 @Serializable
 data class JsonRpcRequest<P>(
@@ -23,7 +24,7 @@ data class PendingRequest<T>(
   val deferred: CompletableDeferred<T>, val requestId: String
 ) {
   suspend fun await(timeoutMillis: Long): T {
-    return withTimeout(timeoutMillis) {
+    return withTimeout(timeoutMillis.milliseconds) {
       deferred.await()
     }
   }
@@ -42,4 +43,10 @@ enum class MethodType(val method: String) {
   GET_CLIENT_INFO("get.client.info"),
   CHAT_BROADCAST("chat.broadcast"),
   EXECUTE_COMMAND("execute.command"),
+  GET_PLAYERS("get.players"),
+  GET_SERVER_STATUS("get.server_status"),
+  GET_PLACEHOLDERS("get.placeholders"),
+  GET_STATISTICS("get.statistics"),
+  GET_ADVANCEMENTS("get.advancements"),
+  GET_EQUIPMENT("get.equipment"),
 }

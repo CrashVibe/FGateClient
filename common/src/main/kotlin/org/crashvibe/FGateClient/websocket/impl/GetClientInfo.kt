@@ -14,12 +14,22 @@ class GetClientInfo(val clientInfo: ClientInfo) : RequestHandler() {
   override val method: MethodType = MethodType.GET_CLIENT_INFO
 
   @Serializable
+  data class Capabilities(
+    val players: Boolean,
+    val server_status: Boolean,
+    val statistics: Boolean = false,
+    val advancements: Boolean = false,
+    val equipment: Boolean = false
+  )
+
+  @Serializable
   data class ClientInfo(
     val minecraft_version: String,
     val minecraft_software: String,
     val supports_papi: Boolean,
     val supports_command: Boolean,
-    val player_count: Int
+    val player_count: Int,
+    val capabilities: Capabilities
   )
 
   override fun handle(request: JsonRpcRequest<JsonElement>) {

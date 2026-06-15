@@ -14,11 +14,15 @@ repositories {
   maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") {
     name = "spigot-repo"
   }
+  maven("https://repo.extendedclip.com/releases/") {
+    name = "placeholderapi-repo"
+  }
 }
 
 dependencies {
   implementation(project(":common"))
   compileOnly("org.spigotmc:spigot-api:1.21.9-R0.1-SNAPSHOT")
+  compileOnly("me.clip:placeholderapi:2.11.6")
   implementation("org.bstats:bstats-bukkit:3.1.0")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 }

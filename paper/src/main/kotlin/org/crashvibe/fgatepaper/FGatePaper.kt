@@ -1,5 +1,6 @@
 package org.crashvibe.fgatepaper
 
+import com.crashvibe.fgateclient.handler.RequestHandler
 import com.crashvibe.fgateclient.handler.impl.GetClientInfo
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
@@ -8,6 +9,12 @@ import org.crashvibe.FGateClient.FGateClient
 import org.crashvibe.FGateClient.listeners.requiredListeners
 import org.crashvibe.fgatepaper.handler.ChatBroadcast
 import org.crashvibe.fgatepaper.handler.Command
+import org.crashvibe.fgatepaper.handler.GetAdvancements
+import org.crashvibe.fgatepaper.handler.GetEquipment
+import org.crashvibe.fgatepaper.handler.GetPlaceholders
+import org.crashvibe.fgatepaper.handler.GetPlayers
+import org.crashvibe.fgatepaper.handler.GetServerStatus
+import org.crashvibe.fgatepaper.handler.GetStatistics
 import org.crashvibe.fgatepaper.handler.KickPlayer
 import org.crashvibe.fgatepaper.listener.PaperPlatformListenerContract
 import org.crashvibe.fgatepaper.utils.registerEvents
@@ -21,17 +28,34 @@ class FGatePaper : JavaPlugin() {
   }
 
   override fun onEnable() {
-    FGateClient.init(File(dataFolder, "config.yml").toPath(), logger,
+    val hasPapi = Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null
+    val handlers = mutableListOf<RequestHandler>(
       GetClientInfo(
         GetClientInfo.ClientInfo(
           minecraft_version = Bukkit.getVersion(),
           minecraft_software = Bukkit.getName(),
-          supports_papi = Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null,
+          supports_papi = hasPapi,
           supports_command = true,
-          player_count = Bukkit.getOnlinePlayers().size
+          player_count = Bukkit.getOnlinePlayers().size,
+          capabilities = GetClientInfo.Capabilities(
+            players = true,
+            server_status = true,
+            statistics = true,
+            advancements = true,
+            equipment = true
+          )
         )
       ),
-      KickPlayer(), ChatBroadcast(), Command()
+      KickPlayer(), ChatBroadcast(), Command(),
+      GetPlayers(), GetServerStatus(), GetStatistics(),
+      GetAdvancements(), GetEquipment()
+    )
+    if (hasPapi) {
+      handlers.add(GetPlaceholders())
+    }
+    FGateClient.init(
+      File(dataFolder, "config.yml").toPath(), logger,
+      *handlers.toTypedArray()
     )
 
     initListeners()
